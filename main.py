@@ -51,13 +51,13 @@ def graph(n, td):
 	f.savefig("graph.pdf")
 
 def main():
-	# print ("Enter a square matrix A, in the form: [[a,b],[c,d]].")
-	# A = generate_matrix()
-	# print ("Enter a square matrix B, in the form: [[a,b],[c,d]].")
-	# B = generate_matrix()
+	print ("Enter a square matrix A, in the form: [[a,b],[c,d]].")
+	A = generate_matrix()
+	print ("Enter a square matrix B, in the form: [[a,b],[c,d]].")
+	B = generate_matrix()
 
-	A = [[0,0],[1,0]]
-	B = [[0,1],[0,0]]
+	# A = [[0,0],[1,0]]
+	# B = [[0,1],[0,0]]
 	lhs_ = lhs(A,B)
 	range_ = np.arange(0,num,1)
 	td = []
@@ -66,7 +66,8 @@ def main():
 		rhs_= rhs(A,B,n)
 		td.append(trace_distance(lhs_, rhs_))
 
-	print (td, range_)
+	for n in range_:
+		print (n, td[n])
 	graph(range_, td)
 
 
