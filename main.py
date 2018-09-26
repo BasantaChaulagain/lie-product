@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import linalg
+from numpy import linalg as LA
+
+# Number of sample to be displayed in graph
+num = 200
 
 # Matrix generation
 def generate_matrix():
@@ -32,9 +36,15 @@ def rhs(a,b,n):
 	powered = np.power(matmul, n)
 	return powered
 
-def graph(td, n):
+def trace_distance(a,b):
+	diff = np.subtract(a,b)
+	e = np.subtract(b,a)
+	result = (LA.norm(diff,'nuc'))/2
+	return result
+
+def graph(n, td):
 	f = plt.figure()
-	plt.plot(td, n, 'ro')
+	plt.plot(n, td)
 	plt.xlabel('n')
 	plt.ylabel('Trace distance')
 	plt.title('Trace distance vs n')
@@ -48,24 +58,17 @@ def main():
 
 	A = [[0,0],[1,0]]
 	B = [[0,1],[0,0]]
-	print (A)
-	print (B)
-	lhs(A,B)
-	range_ = np.arange(0,20,1)
-	rhs_list = []
+	lhs_ = lhs(A,B)
+	range_ = np.arange(0,num,1)
 	td = []
 
 	for n in range_:
-		rhs_list.append(rhs(A,B,n))
+		rhs_= rhs(A,B,n)
+		td.append(trace_distance(lhs_, rhs_))
 
-	print rhs_list
-	
-	for n in range_:
-		td.append(trace_distance(lhs, rhs_list[n]))
+	print (td, range_)
+	graph(range_, td)
 
-	# td = [1,2,3,4]
-	# n = [1,4,9,16]
-	# graph(td, n)
 
 if __name__ == "__main__":
 	main()
