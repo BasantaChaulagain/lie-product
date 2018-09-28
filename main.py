@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from scipy import linalg
 
 # Number of sample to be displayed in graph
-num = 200
+start_index = 1
+end_index =200
 
 # Matrix generation
 def generate_matrix():
@@ -24,7 +25,7 @@ def check_square(sq):
 expMat = lambda x: linalg.expm(x)
 
 def lhs(a,b):
-	add = np.add(a,b)
+	add = np.add(np.array(a),np.array(b))
 	return expMat(add)
 
 def rhs(a,b,n):
@@ -58,14 +59,13 @@ def main():
 	# A = [[1,-2],[1,0]]
 	# B = [[0,2],[-1,0]]
 	lhs_ = lhs(A,B)
-	range_ = np.arange(1,num+1,1)
+	range_ = np.arange(start_index, end_index+1,1)
 	td = []
 
 	for n in range_:
 		rhs_= rhs(A,B,n)
 		td.append(trace_distance(lhs_, rhs_))
-		print (n, td[n-1])
-		print ("--------------")
+		print (n, td[n-start_index])
 		
 	graph(range_, td)
 
