@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import linalg
-from numpy import linalg as LA
 
 # Number of sample to be displayed in graph
 num = 200
@@ -29,8 +28,8 @@ def lhs(a,b):
 	return expMat(add)
 
 def rhs(a,b,n):
-	expA = expMat(n*np.array(a))
-	expB = expMat(n*np.array(b))
+	expA = expMat(1/float(n)*np.array(a))
+	expB = expMat(1/float(n)*np.array(b))
 	matmul = np.matmul(expA, expB)
 	# raising the power of matrix to the number n.
 	powered = np.power(matmul, n)
@@ -38,8 +37,7 @@ def rhs(a,b,n):
 
 def trace_distance(a,b):
 	diff = np.subtract(a,b)
-	e = np.subtract(b,a)
-	result = (LA.norm(diff,'nuc'))/2
+	result = (linalg.norm(diff,'nuc'))/2
 	return result
 
 def graph(n, td):
@@ -48,6 +46,7 @@ def graph(n, td):
 	plt.xlabel('n')
 	plt.ylabel('Trace distance')
 	plt.title('Trace distance vs n')
+	# plt.show()
 	f.savefig("graph.pdf")
 
 def main():
@@ -56,18 +55,18 @@ def main():
 	print ("Enter a square matrix B, in the form: [[a,b],[c,d]].")
 	B = generate_matrix()
 
-	# A = [[0,0],[1,0]]
-	# B = [[0,1],[0,0]]
+	# A = [[1,-2],[1,0]]
+	# B = [[0,2],[-1,0]]
 	lhs_ = lhs(A,B)
-	range_ = np.arange(0,num,1)
+	range_ = np.arange(1,num+1,1)
 	td = []
 
 	for n in range_:
 		rhs_= rhs(A,B,n)
 		td.append(trace_distance(lhs_, rhs_))
-
-	for n in range_:
-		print (n, td[n])
+		print (n, td[n-1])
+		print ("--------------")
+		
 	graph(range_, td)
 
 
