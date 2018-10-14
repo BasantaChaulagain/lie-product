@@ -8,18 +8,8 @@ end_index =200
 
 # Matrix generation
 def generate_matrix():
-	inp = input()
-	if not check_square(inp):
-		print ("Please enter a square matrix.")
-	return np.matrix(inp)
-
-#Check if the entered matrix is a square matrix.
-def check_square(sq):
-    rows = len(sq)
-    for row in sq:
-        if len(row) != rows:
-            return False
-    return True
+	inp = np.array(input())
+	return (np.matrix(str(inp)))
 
 # Calculation of matrix exponential
 expMat = lambda x: linalg.expm(x)
@@ -47,17 +37,17 @@ def graph(n, td):
 	plt.xlabel('n')
 	plt.ylabel('Trace distance')
 	plt.title('Trace distance vs n')
-	# plt.show()
+	plt.show()
 	f.savefig("graph.pdf")
 
 def main():
-	print ("Enter a square matrix A, in the form: [[a,b],[c,d]].")
+	print ("Enter a square matrix A, in the form: a,b; c,d.")
 	A = generate_matrix()
-	print ("Enter a square matrix B, in the form: [[a,b],[c,d]].")
+	print ("Enter a square matrix B, in the form: a,b; c,d.")
 	B = generate_matrix()
 
-	# A = [[1,-2],[1,0]]
-	# B = [[0,2],[-1,0]]
+	# A = np.matrix('1,-2;1,0')
+	# B = np.matrix('0,2;-1,0')
 	lhs_ = lhs(A,B)
 	range_ = np.arange(start_index, end_index+1,1)
 	td = []
